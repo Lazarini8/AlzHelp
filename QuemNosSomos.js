@@ -1,0 +1,158 @@
+import React from 'react';
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native'; 
+import LogoCerebro from './componentes/LogoCerebro';
+import BarraNavegacao from './componentes/BarraNavegacao';
+
+export default function QuemNosSomos() {
+  const navigation = useNavigation(); 
+
+  const pessoas = [
+    {
+      nome: 'Julia Lazarini',
+      idade: '18 anos',
+      usuario: '@lazarinii8',
+      funcao: 'Desenvolvedora',
+      imagem: require('./assets/ImagemJu.jpg'),
+      descricao:
+        'Este projeto representa meu desejo sincero de ajudar e compreender as pessoas da melhor forma possível. Trabalho para que o aplicativo seja intuitivo, acolhedor e capaz de promover mudanças positivas na vida de quem o utiliza.',
+    },
+    {
+      nome: 'Melissa Ayumi Ikuta',
+      idade: '18 anos',
+      usuario: '@melissaikuta',
+      funcao: 'Desenvolvedora',
+      imagem: require('./assets/ImagemMe.jpg'),
+      descricao:
+        'O Alzhelp para mim está sendo a maior prova de empatia que eu já alcancei, visto que é necessário a todo momento pensar nas necessidades do próximo. Faço ele hoje pensando em poder mudar a vida de pessoas que, assim como todo mundo, merecem uma vida leve e satisfatória.',
+    },
+  ];
+
+  return (
+    <View style={styles.container}>
+      <LinearGradient
+        colors={['#6495ed', '#ba55d3']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0.5 }}
+        style={styles.gradientBackground}
+      >
+        <LogoCerebro />
+        <Image source={require('./assets/logoBorbRoxoClaro.png')} style={styles.borboleta} />
+
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
+          <Text style={styles.title1}>Nosso propósito</Text>
+          <Text style={styles.label}>
+            O Alzhelp é fruto do projeto “Cuidando de Quem Cuida”, criado com o propósito de oferecer suporte real e significativo a quem enfrenta os desafios de cuidar de pessoas com Alzheimer.
+            {'\n\n'}
+            Nosso objetivo é auxiliar cuidadores a entender a doença, lidar com suas fases e oferecer um cuidado mais digno e humano. Sabemos que a saúde e o bem-estar de quem cuida são fundamentais durante todo esse processo, por isso o Alzhelp também foca no cuidado com o cuidador.
+            {'\n\n'}
+            Além de informações claras sobre a doença, disponibilizamos ferramentas práticas para tornar a rotina menos desgastante, além de conteúdos voltados à saúde mental e ao autocuidado.
+            {'\n\n'}
+            Cuidar de alguém exige muito, mas ninguém precisa fazer isso sozinho.
+          </Text>
+
+          <Text style={styles.title1}>Quem nós somos</Text>
+
+          {pessoas.map((pessoa, index) => (
+            <View key={index} style={styles.card}>
+                <Image source={pessoa.imagem} style={styles.perfilImagem} />
+
+              <View style={styles.perfilInfo}>
+                 <Text style={styles.nome}>{pessoa.nome}</Text>
+                  <Text style={styles.subInfo}>{pessoa.idade}{'\n'}{pessoa.usuario}{'\n'}{pessoa.funcao}</Text>
+              </View>
+                  <Text style={styles.descricao}>{pessoa.descricao}</Text>
+            </View>
+          ))}
+        </ScrollView>
+
+        <BarraNavegacao />
+      </LinearGradient>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  gradientBackground: {
+    flex: 1,
+    paddingTop: 200,
+    alignItems: 'center',
+  },
+  borboleta: {
+    width: 280,
+    height: 70,
+    resizeMode: 'contain',
+    position: 'absolute',
+    marginTop: 85,
+    alignSelf: 'center',
+    zIndex: 1,
+  },
+  scrollView: {
+    width: '100%',
+  },
+  body: {
+    backgroundColor: '#f2f2f2',
+    padding: 20,
+    paddingBottom: 100,
+    width: '100%',
+  },
+  title1: {
+    color: '#333',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    fontFamily: 'Poppins_400Regular',
+  },
+  label: {
+    color: '#555',
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 20,
+    fontFamily: 'Poppins_400Regular',
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    padding: 15,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  perfilImagem: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+    alignSelf: 'center',
+  },
+  perfilInfo: {
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  nome: {
+    fontSize: 14,
+    fontFamily: 'Poppins_700Bold',
+    color: '#222',
+  },
+  subInfo: {
+    fontSize: 12,
+    color: '#777',
+    textAlign: 'center',
+    marginTop: 4,
+    fontFamily: 'Poppins_400Regular',
+  },
+  descricao: {
+    fontSize: 12,
+    color: '#444',
+    lineHeight: 20,
+    textAlign: 'justify',
+    fontFamily: 'Poppins_400Regular',
+  },
+});
