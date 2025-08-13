@@ -6,6 +6,7 @@ import { Calistoga_400Regular } from '@expo-google-fonts/calistoga';
 import { View, ActivityIndicator, StyleSheet, Image, Animated } from 'react-native';
 
 import Cadastro from './screens/Cadastrar';
+import Login from './screens/Login';
 import Home from './screens/Home';
 import Emergencia from './screens/Emergencia';
 import Conteudos from './screens/Conteudos';
@@ -51,6 +52,7 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Splash">
           <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="Cadastro" component={Cadastro} />
+          <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Emergencia" component={Emergencia} />
           <Stack.Screen name="Conteudos" component={Conteudos} />
