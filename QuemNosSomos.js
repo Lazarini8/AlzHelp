@@ -10,6 +10,15 @@ export default function QuemNosSomos() {
 
   const pessoas = [
     {
+      nome: 'Isabel Menezes Fiorini',
+      idade: '18 anos',
+      usuario: '@mf.bel',
+      funcao: 'Desenvolvedora',
+      imagem: require('./assets/ImagemBel.jpg'),
+      descricao:
+        'Esse projeto é muito importante para mim, pois me dá a oportunidade de ajudar pessoas que estão enfrentando a mesma realidade que a minha família enfrentou.Por meio deste aplicativo, quero contribuir para que essa jornada seja mais compreensível, acolhedora e tranquila, oferecendo informações, suporte e ferramentas que facilitem o dia a dia de pacientes, cuidadores e familiares.',
+    },
+    {
       nome: 'Julia Lazarini',
       idade: '18 anos',
       usuario: '@lazarinii8',
@@ -18,6 +27,7 @@ export default function QuemNosSomos() {
       descricao:
         'Este projeto representa meu desejo sincero de ajudar e compreender as pessoas da melhor forma possível. Trabalho para que o aplicativo seja intuitivo, acolhedor e capaz de promover mudanças positivas na vida de quem o utiliza.',
     },
+    
     {
       nome: 'Melissa Ayumi Ikuta',
       idade: '18 anos',
@@ -27,6 +37,8 @@ export default function QuemNosSomos() {
       descricao:
         'O Alzhelp para mim está sendo a maior prova de empatia que eu já alcancei, visto que é necessário a todo momento pensar nas necessidades do próximo. Faço ele hoje pensando em poder mudar a vida de pessoas que, assim como todo mundo, merecem uma vida leve e satisfatória.',
     },
+  
+  
   ];
 
   return (
