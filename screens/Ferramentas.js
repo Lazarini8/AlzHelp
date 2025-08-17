@@ -7,6 +7,7 @@ import AgendaWidget from '../componentes/AgendaWidget';
 import { useEventos } from '../EventoContext';
 import LogoCerebro from '../componentes/LogoCerebro';
 import BarraNavegacao from '../componentes/BarraNavegacao';
+import Medicamentos from './Medicamentos';
 
 
 
@@ -41,7 +42,8 @@ export default function Ferramentas() {
                   <Text style={styles.textoButton}>Relógio</Text>
                 </TouchableOpacity>  
 
-                <TouchableOpacity style={styles.buttonGestaoMed} >
+                <TouchableOpacity style={styles.buttonGestaoMed}  
+                onPress={() => navigation.navigate('Medicamentos')}>
                   <Image source={require('../assets/remedio.png')} style={styles.remedioIcon} />
                   <Text style={styles.textoButton}>Medicamentos</Text>
                 </TouchableOpacity>  
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
   },
    body: {
     backgroundColor: '#d3d3d3',
-    padding: 15,
+    padding: 35,
     marginTop: 50,
     width: '100%',
     alignItems: 'left',

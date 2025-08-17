@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: '#d3d3d3',
-    padding: 20,
+    padding: 30,
     paddingBottom: 100,
     width: '100%',
   },
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
   },
   ferramentasNavegar:{
     width: 110,
-    height: 60,
+    height: 70,
     right: 24,
     resizeMode: 'contain',
   },
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   },
   perfilNavegar:{
     width: 90,
-    height: 90,
+    height: 55,
     right: 20,
     resizeMode: 'contain',
   },

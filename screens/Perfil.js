@@ -4,9 +4,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native'; 
 import LogoCerebro from '../componentes/LogoCerebro';
 import BarraNavegacao from '../componentes/BarraNavegacao';
+import { useProfileImage } from './src/FotoPerfil';
 
 export default function Perfil() {
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
+  const { profileImage, pickImage } = useProfileImage();
+
   return (
     <View style={{ flex: 1 }}>
       <LinearGradient
@@ -23,7 +26,11 @@ export default function Perfil() {
         <ScrollView contentContainerStyle={styles.body}>
         
         <View style={styles.retangulo} >
-          <Image source={require('../assets/perfil4.png')} style={styles.profileIcon} />
+          <TouchableOpacity onPress={pickImage}>
+          <Image source={profileImage ? { uri: profileImage} : require('../assets/perfil4.png')} 
+          style={styles.profileIcon} />
+          </TouchableOpacity>
+
           <TouchableOpacity style={styles.buttonEditar}>
              <Text style={styles.buttonTextEditar}>Editar Informações</Text>
           </TouchableOpacity>
@@ -86,7 +93,7 @@ const styles = StyleSheet.create({
   body: {
   backgroundColor: '#d3d3d3',
   paddingBottom: 100,
-  width: '100%',
+  width: 400,
   alignItems: 'flex-start',
   flexGrow: 1, // faz com que o conteúdo tente ocupar a altura total da tela
 },
@@ -103,16 +110,18 @@ const styles = StyleSheet.create({
   },
 
   retangulo: {
-    width: 360,
+    width: 400,
     height: 150,
     backgroundColor: '#693fbb',
-    marginTop:40,
+    marginTop:0,
     justifyContent: 'center',  // Alinha a imagem no centro vertical
   },
    profileIcon: {
-    width: 60,
-    height: 60,
-    left:10,
+    width: 70,
+    height: 70,
+    left: 20,
+    borderRadius: 30,
+    
     
   },
   buttonEditar:{
@@ -134,13 +143,13 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       alignSelf: 'center',
-      marginTop:15,
+      marginTop:45,
     
   },
   buttonOpcoes:{
     backgroundColor: '#ffffffff',
       width: 325,
-      height: 55,
+      height: 56,
       borderRadius: 23,
       marginBottom:10,
       flexDirection: 'row',       // Alinha lado a lado
