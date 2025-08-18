@@ -66,7 +66,7 @@ export default function Ferramentas() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  container: { flex: 1,  },
   text:
   { fontSize: 24, fontWeight: 'bold' },
   
@@ -88,19 +88,19 @@ const styles = StyleSheet.create({
   },
    body: {
     backgroundColor: '#d3d3d3',
-    padding: 35,
     marginTop: 50,
-    width: '100%',
-    alignItems: 'left',
     paddingBottom: 200, //Margem no final para não tampar nenhum conteúdo com o footbar
+    backgroundColor: '#F3F4F6', // Fundo cinza claro
+    minHeight: '100%', // Garante que o body ocupe a tela inteira
+
+    
   },
- 
 
   AlinhaBottons:{
   justifyContent: 'space-evenly', // 🔥 Mesmo espaçamento entre todos os botões
   alignItems: 'center',
   flexDirection: 'row',
-  right:15,
+  right:2,
   marginTop: 20,
  
   },
