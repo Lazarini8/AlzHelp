@@ -7,7 +7,6 @@ import LogoCerebro from '../componentes/LogoCerebro';
 import BarraNavegacao from '../componentes/BarraNavegacao';
 
 
-
 export default function Home() {
 
   const navigation = useNavigation();
