@@ -16,7 +16,7 @@ export default function QuemNosSomos() {
       funcao: 'Desenvolvedora',
       imagem: require('./assets/ImagemBel.jpg'),
       descricao:
-        'Esse projeto é muito importante para mim, pois me dá a oportunidade de ajudar pessoas que estão enfrentando a mesma realidade que a minha família enfrentou.Por meio deste aplicativo, quero contribuir para que essa jornada seja mais compreensível, acolhedora e tranquila, oferecendo informações, suporte e ferramentas que facilitem o dia a dia de pacientes, cuidadores e familiares.',
+        'Esse projeto é muito importante para mim, pois me dá a oportunidade de ajudar pessoas que estão enfrentando a mesma realidade que a minha família enfrentou. Por meio deste aplicativo, quero contribuir para que essa jornada seja mais compreensível, acolhedora e tranquila, oferecendo informações, suporte e ferramentas que facilitem o dia a dia de pacientes, cuidadores e familiares.',
     },
     {
       nome: 'Julia Lazarini',
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   body: {
-    backgroundColor: '#f2f2f2',
+     backgroundColor: '#F3F4F6', 
     padding: 20,
     paddingBottom: 100,
     width: '100%',

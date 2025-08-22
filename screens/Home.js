@@ -48,7 +48,7 @@ export default function Home() {
           contentContainerStyle={styles.body} 
           showsVerticalScrollIndicator={false}
         >
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Conteudos')}>
             <Text style={styles.buttonText}>Possui alguma dúvida?</Text>
             <Text style={styles.buttonText}>Pesquise aqui!</Text>
           </TouchableOpacity>
@@ -170,9 +170,10 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: '#d3d3d3',
-    padding: 30,
-    paddingBottom: 100,
-    width: '100%',
+    marginTop: 50,
+    paddingBottom: 200, //Margem no final para não tampar nenhum conteúdo com o footbar
+    backgroundColor: '#F3F4F6', // Fundo cinza claro
+    minHeight: '100%', // Garante que o body ocupe a tela inteira
   },
   button: {
     backgroundColor: '#693fbb',
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
   buttonEmergency:{
     backgroundColor: '#ec2300',
     padding: 13,
-    marginTop: 65,
+    marginTop: 55,
     width: 200,
     height: 50,
     borderRadius: 60,

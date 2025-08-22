@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -16,9 +16,8 @@ import { Calendar } from 'react-native-big-calendar';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useEventos } from '../EventoContext';
-
 
 dayjs.locale('pt-br');
 
@@ -39,13 +38,10 @@ const REPEAT_OPTIONS = [
 
 export default function Calendario() {
   const navigation = useNavigation();
-
-
+  const route = useRoute();
   const { eventos, setEventos } = useEventos();
 
   const [modalVisible, setModalVisible] = useState(false);
-
-  // Dados do evento no modal
   const [eventoSelecionado, setEventoSelecionado] = useState(null);
   const [titulo, setTitulo] = useState('');
   const [data, setData] = useState(new Date());
@@ -54,6 +50,7 @@ export default function Calendario() {
   const [dataFinalRepeticao, setDataFinalRepeticao] = useState(null);
   const [cor, setCor] = useState(COLORS[0].value);
   const [repeticao, setRepeticao] = useState('none');
+  const [medicamento, setMedicamento] = useState(null); // Novo estado para medicamento
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showPickerInicio, setShowPickerInicio] = useState(false);
@@ -61,7 +58,17 @@ export default function Calendario() {
   const [showDatePickerFinal, setShowDatePickerFinal] = useState(false);
 
   const [dataAtual, setDataAtual] = useState(new Date());
-  const [viewMode, setViewMode] = useState('month'); // day, week, month
+  const [viewMode, setViewMode] = useState('month');
+
+  // Receber medicamento dos parâmetros de navegação
+  useEffect(() => {
+    if (route.params?.medicamento) {
+      const { medicamento } = route.params;
+      setMedicamento(medicamento);
+      setTitulo(medicamento.nome); // Preenche o título com o nome do medicamento
+      setModalVisible(true); // Abre o modal automaticamente
+    }
+  }, [route.params]);
 
   // Função para validar horários
   function validarHorarios() {
@@ -92,7 +99,7 @@ export default function Calendario() {
 
     while (true) {
       if (dataFinalRepeticao && novaData.isAfter(dayjs(dataFinalRepeticao))) break;
-      if (!dataFinalRepeticao && i > 3650) break; // Limite 10 anos para não travar
+      if (!dataFinalRepeticao && i > 3650) break;
 
       const duracaoMinutos = dayjs(baseEvento.end).diff(dayjs(baseEvento.start), 'minute');
 
@@ -118,7 +125,7 @@ export default function Calendario() {
   // Abrir modal para novo evento
   function abrirModalComDataSelecionada(diaSelecionado) {
     setEventoSelecionado(null);
-    setTitulo('');
+    setTitulo(medicamento ? medicamento.nome : '');
     setData(dayjs(diaSelecionado).toDate());
     const dInicio = new Date();
     dInicio.setSeconds(0);
@@ -156,6 +163,7 @@ export default function Calendario() {
     setCor(evento.color || COLORS[0].value);
     setRepeticao(evento.repeticao || 'none');
     setDataFinalRepeticao(evento.dataFinalRepeticao || null);
+    setMedicamento(evento.medicamento || null); // Carrega medicamento, se existir
 
     setModalVisible(true);
   }
@@ -178,6 +186,7 @@ export default function Calendario() {
     setCor(COLORS[0].value);
     setRepeticao('none');
     setDataFinalRepeticao(null);
+    setMedicamento(null); // Limpa medicamento
   }
 
   // Adicionar ou editar evento
@@ -194,7 +203,6 @@ export default function Calendario() {
     let novosEventos = [...eventos];
 
     if (eventoSelecionado) {
-      // Remove evento(s) da série se existir serieId, senão só o selecionado
       if (eventoSelecionado.serieId) {
         novosEventos = novosEventos.filter(ev => ev.serieId !== eventoSelecionado.serieId);
       } else {
@@ -228,6 +236,7 @@ export default function Calendario() {
       color: cor,
       repeticao,
       dataFinalRepeticao,
+      medicamento, // Adiciona o campo medicamento
     };
 
     if (repeticao !== 'none') {
@@ -275,9 +284,16 @@ export default function Calendario() {
       {/* Header */}
       <View style={styles.headerContainer}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={28} color="white" />
-          </TouchableOpacity>
+           <TouchableOpacity onPress={() => {
+                     if (navigation.canGoBack()) {
+                       navigation.goBack();
+                     } else {
+                      navigation.navigate('Ferramentas');
+                     }
+                   }} style={styles.backButton}>
+         
+                   <Ionicons name="arrow-back" size={28} color="#ffffff" />
+                 </TouchableOpacity>
 
           <View style={styles.navContainer}>
             <TouchableOpacity onPress={() => setDataAtual(dayjs(dataAtual).subtract(1, 'month').toDate())}>
@@ -335,6 +351,17 @@ export default function Calendario() {
         >
           <View style={styles.modalContent}>
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+              {/* Informações do medicamento, se houver */}
+              {medicamento && (
+                <View style={styles.medicamentoContainer}>
+                  <Text style={styles.sectionTitle}>Medicamento:</Text>
+                  <Text style={styles.medicamentoTexto}>Nome: {medicamento.nome}</Text>
+                  <Text style={styles.medicamentoTexto}>Descrição: {medicamento.descricao}</Text>
+                  <Text style={styles.medicamentoTexto}>Dosagem: {medicamento.dosagem || 'Não disponível'}</Text>
+                  <Text style={styles.medicamentoTexto}>Efeitos Colaterais: {medicamento.efeitos || 'Não disponível'}</Text>
+                </View>
+              )}
+
               <Text style={styles.sectionTitle}>Data do Evento:</Text>
               <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.input}>
                 <Text>{dayjs(data).format('DD/MM/YYYY')}</Text>
@@ -468,7 +495,18 @@ export default function Calendario() {
   );
 }
 
+
 const styles = StyleSheet.create({
+medicamentoContainer: {
+    marginBottom: 15,
+  },
+  medicamentoTexto: {
+    fontSize: 14,
+    color: '#4B5563',
+    marginTop: 4,
+    lineHeight: 20,
+  },
+
   headerContainer: {
     backgroundColor: '#7B68EE',
     paddingBottom: 10,

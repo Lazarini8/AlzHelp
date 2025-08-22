@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   gradientBackground: { // Renomeado de container
     flex: 1,
     paddingTop: 210,
-    alignItems: 'center',
   },
 
   titulo: {
@@ -91,11 +90,11 @@ const styles = StyleSheet.create({
   },
 
   body: {
-  backgroundColor: '#d3d3d3',
-  paddingBottom: 100,
-  width: 400,
-  alignItems: 'flex-start',
-  flexGrow: 1, // faz com que o conteúdo tente ocupar a altura total da tela
+    backgroundColor: '#d3d3d3',
+    marginTop: 10,
+    paddingBottom: 200, //Margem no final para não tampar nenhum conteúdo com o footbar
+    backgroundColor: '#F3F4F6', // Fundo cinza claro
+    minHeight: '100%', // Garante que o body ocupe a tela inteira
 },
 
   borboleta: {
@@ -122,7 +121,6 @@ const styles = StyleSheet.create({
     left: 20,
     borderRadius: 30,
     
-    
   },
   buttonEditar:{
      backgroundColor: '#b98bed',
@@ -140,7 +138,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_700Bold',
   },
   opcoes:{
-      justifyContent: 'center',
+      
       alignItems: 'center',
       alignSelf: 'center',
       marginTop:45,

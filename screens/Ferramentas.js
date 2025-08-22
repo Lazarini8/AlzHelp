@@ -92,8 +92,6 @@ const styles = StyleSheet.create({
     paddingBottom: 200, //Margem no final para não tampar nenhum conteúdo com o footbar
     backgroundColor: '#F3F4F6', // Fundo cinza claro
     minHeight: '100%', // Garante que o body ocupe a tela inteira
-
-    
   },
 
   AlinhaBottons:{

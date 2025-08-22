@@ -43,7 +43,7 @@ export default function AgendaWidget({ eventos }) {
 
 const styles = StyleSheet.create({
   widgetContainer: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#dabaf8ff',
     padding: 20,
     borderRadius: 10,
     shadowColor: '#000',
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 3,
     marginBottom: 20,
-    left: -2,
+    alignSelf: 'center',
     width: 325,
     minHeight: 160,
     marginTop: 25,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   verMais: {
     right: -15,
-    color: '#7B68EE',
+    color: '#693fbb',
     fontWeight: 'bold',
   },
   semEventos: {

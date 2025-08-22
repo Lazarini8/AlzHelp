@@ -71,9 +71,17 @@ export default function PesquisaRemedio() {
       style={styles.gradientBackground}
     >
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <TouchableOpacity onPress={() => {
+            if (navigation.canGoBack()) {
+              navigation.goBack();
+            } else {
+             navigation.navigate('Ferramentas');
+            }
+          }} style={styles.backButton}>
+
           <Ionicons name="arrow-back" size={28} color="#ffffff" />
         </TouchableOpacity>
+
         <Text style={styles.titulo}>Glossário de Remédios</Text>
       </View>
 
@@ -115,18 +123,38 @@ export default function PesquisaRemedio() {
             <Text style={styles.botaoTexto}>Pesquisar</Text>
           </TouchableOpacity>
 
-          {info && (
-            <Animated.View style={[styles.resultado, { opacity: fadeAnim }]}>
-              <Text style={styles.label}>Descrição:</Text>
-              <Text style={styles.texto}>{info.descricao}</Text>
+        {info && (
+  <Animated.View style={[styles.resultado, { opacity: fadeAnim }]}>
+    {console.log('Info:', info)}
+    <Text style={styles.label}>Descrição:</Text>
+    <Text style={styles.texto}>{info.descricao}</Text>
 
-              <Text style={styles.label}>Dosagem:</Text>
-              <Text style={styles.texto}>{info.dosagem || 'Não disponível'}</Text>
+    <Text style={styles.label}>Dosagem:</Text>
+    <Text style={styles.texto}>{info.dosagem || 'Não disponível'}</Text>
 
-              <Text style={styles.label}>Efeitos Colaterais:</Text>
-              <Text style={styles.texto}>{info.efeitos || 'Não disponível'}</Text>
-            </Animated.View>
-          )}
+    <Text style={styles.label}>Efeitos Colaterais:</Text>
+    <Text style={styles.texto}>{info.efeitos || 'Não disponível'}</Text>
+
+    {!info.descricao.includes('não encontrado') && !info.descricao.includes('Erro') && (
+      <TouchableOpacity
+        style={styles.botaoAdc}
+        onPress={() => {
+          navigation.navigate('Agenda', {
+            medicamento: {
+              nome: remedio,
+              descricao: info.descricao,
+              dosagem: info.dosagem,
+              efeitos: info.efeitos,
+            },
+          });
+        }}
+      >
+        <Text style={styles.botaoTexto}>Adicionar ao Calendário</Text>
+      </TouchableOpacity>
+    )}
+  </Animated.View>
+)}
+            
         </View>
       </ScrollView>
     </LinearGradient>
@@ -224,6 +252,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '90%',
     marginVertical: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  botaoAdc: {
+    backgroundColor: '#693fbb',
+    borderRadius: 16,
+    paddingVertical: 11,
+    alignItems: 'center',
+    marginVertical: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
