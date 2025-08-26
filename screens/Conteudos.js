@@ -19,18 +19,74 @@ const listaConteudos = [
   },
   {
     id: '2',
-    titulo: 'Glossário de Remédios',
-    keywords: 'remédios ibuprofeno dor inflamação medicamento',
-    tela: 'PesquisaRemedio',
-    imagem: require('../assets/borboletaBrancaRoxo-Photoroom.png'), // Caminho da imagem
+    titulo: 'Tratamento',
+    keywords: 'tratamento alzheimer',
+    tela: 'Tratamento',
+    imagem: require('../assets/../assets/ImgTratamento.png'), // Caminho da imagem
     categoria: 'Alzheimer',
   },
   {
     id: '3',
-    titulo: 'Calendário de Eventos',
-    keywords: 'calendário eventos agenda lembretes',
-    tela: 'Calendario',
-    imagem: require('../assets/borboletaBrancaRoxo-Photoroom.png'), // Caminho da imagem
+    titulo: 'Cuidados Diários',
+    keywords: 'cuidados ',
+    tela: '',
+    imagem: require('../assets/../assets/ImgCuidadosDiarios.png'),
+    categoria: 'Alzheimer',
+  },
+  {
+    id: '4',
+    titulo: 'Estágios da Doença',
+    keywords: 'estagios',
+    tela: '',
+    imagem: require('../assets/imgEstagios.png'), // Caminho da imagem
+    categoria: 'Alzheimer',
+  },
+  {
+    id: '5',
+    titulo: 'Alteração de Humor',
+    keywords: 'alteracao de humor personalidade',
+    tela: '',
+    imagem: require('../assets/ImgAlteracao.png'), // Caminho da imagem
+    categoria: 'Alzheimer',
+  },
+  {
+    id: '6',
+    titulo: 'Quem é o cuidador?',
+    keywords: 'cuidador ',
+    tela: 'QuemCuidador',
+    imagem: require('../assets/imgEstagios.png'), // Caminho da imagem
+    categoria: 'Cuidador',
+  },
+  {
+    id: '7',
+    titulo: 'Rede de Apoio',
+    keywords: 'cuidador ',
+    tela: '',
+    imagem: require('../assets/ImgRedeApoio.png'), // Caminho da imagem
+    categoria: 'Cuidador',
+  },
+  {
+    id: '8',
+    titulo: 'Saúde Mental',
+    keywords: 'cuidador ',
+    tela: '',
+    imagem: require('../assets/ImgSaudeMental.png'), // Caminho da imagem
+    categoria: 'Cuidador',
+  },
+  {
+    id: '9',
+    titulo: 'Direitos do Cuidador',
+    keywords: 'Direitos cuidador ',
+    tela: '',
+    imagem: require('../assets/ImgDireitosCuidador.png'), // Caminho da imagem
+    categoria: 'Cuidador',
+  },
+  {
+    id: '10',
+    titulo: 'Dicas',
+    keywords: 'Dicas ',
+    tela: '',
+    imagem: require('../assets/ImgDicas.png'), // Caminho da imagem
     categoria: 'Cuidador',
   },
 ];

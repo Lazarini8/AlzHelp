@@ -418,6 +418,7 @@ const styles = StyleSheet.create({
 
   emptyText: {
     textAlign: 'center',
+    textAlignVertical: 'center',
     marginTop: 10,
     color: '#777',
     fontSize: 16,
