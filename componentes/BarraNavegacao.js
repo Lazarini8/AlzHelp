@@ -1,109 +1,94 @@
-// componentes/BarraNavegacao.js
 import React from 'react';
-import { View, TouchableOpacity, Image, StyleSheet,Text } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default function BarraNavegacao() {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.footerBar}>
-    <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.homeButton}>
-      <Image source={require('../assets/homeIcon.png')} style={styles.homeIcon} />
-    </TouchableOpacity>
+      <View style={styles.footerBar}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
+          <Image
+            source={require('../assets/homeIcon.png')}
+            style={styles.homeIcon}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
 
-    <TouchableOpacity onPress={() => navigation.navigate('Conteudos')} style={styles.conteudosButton}>
-      <Image source={require('../assets/borboletaAmarelaRoxo.png')} style={styles.conteudosIcon} />
-    </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Conteudos')} style={styles.button}>
+          <Image
+            source={require('../assets/borboletaAmarelaRoxo.png')}
+            style={styles.conteudosIcon}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
 
-    <TouchableOpacity onPress={() => navigation.navigate('Ferramentas')} style={styles.calendarioButton}>
-      <Image source={require('../assets/calendario-icon2.png')} style={styles.calendarioIcon} />
-    </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Ferramentas')} style={styles.button}>
+          <Image
+            source={require('../assets/calendario-icon2.png')}
+            style={styles.calendarioIcon}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
 
-    <TouchableOpacity onPress={() => navigation.navigate('Mapa')} style={styles.mapaButton}>
-      <Image source={require('../assets/mapa3.png')} style={styles.mapaIcon} />
-    </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Mapa')} style={styles.button}>
+          <Image
+            source={require('../assets/mapa3.png')}
+            style={styles.mapaIcon}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
 
-    <TouchableOpacity onPress={() => navigation.navigate('Perfil')} style={styles.profileButton}>
-      <Image source={require('../assets/perfil2.png')} style={styles.profileIcon} />
-    </TouchableOpacity>
-  </View>
-
+        <TouchableOpacity onPress={() => navigation.navigate('Perfil')} style={styles.button}>
+          <Image
+            source={require('../assets/perfil2.png')}
+            style={styles.profileIcon}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+      </View>
+   
   );
 }
 
 const styles = StyleSheet.create({
-footerBar: {
-    position: 'absolute',
-    bottom: 0,
+ 
+  footerBar: {
     width: '100%',
-    height: 80,
+    height: hp('7%'), // Altura proporcional
     backgroundColor: '#b4a0e4',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: wp('2%'),
+    paddingVertical: hp('1%'),
   },
-  profileButton: {
-    width: 60,
-    height: 60,
+  button: {
+    width: wp('18%'), // Proporcional para acomodar ícones maiores
+    height: hp('8%'), // Ajustado para ícones maiores
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -20,
-  },
-  profileIcon: {
-    width: 75,
-    height: 50,
-    resizeMode: 'contain',
-  },
-  mapaButton: {
-    width: 60,
-    height: 65,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: -25,
-  },
-  mapaIcon: {
-    width: 110,
-    height: 60,
-    resizeMode: 'contain',
-  },
-  calendarioButton: {
-    width: 65,
-    height: 65,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: -20,
-  },
-  calendarioIcon: {
-    width: 85,
-    height: 85,
-    resizeMode: 'contain',
-  },
-  conteudosButton: {
-    width: 68,
-    height: 65,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: -25,
-  },
-  conteudosIcon: {
-    width: 48,
-    height: 50,
-    resizeMode: 'contain',
-  },
-  homeButton: {
-    width: 65,
-    height: 65,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: -30,
   },
   homeIcon: {
-    width: 40,
-    height: 40,
-    resizeMode: 'contain',
+    width: wp('11%'), // Equivalente a ~40px em 360dp
+    height: hp('6%'), // Equivalente a ~40px em 640dp
   },
-
-
+  conteudosIcon: {
+    width: wp('13%'), // Equivalente a ~48px em 360dp
+    height: hp('7.8%'), // Equivalente a ~50px em 640dp
+  },
+  calendarioIcon: {
+    width: wp('23.5%'), // Equivalente a ~85px em 360dp
+    height: hp('13.3%'), // Equivalente a ~85px em 640dp
+  },
+  mapaIcon: {
+    width: wp('30.5%'), // Equivalente a ~110px em 360dp
+    height: hp('9.4%'), // Equivalente a ~60px em 640dp
+  },
+  profileIcon: {
+    width: wp('20.8%'), // Equivalente a ~75px em 360dp
+    height: hp('7.8%'), // Equivalente a ~50px em 640dp
+  },
 });

@@ -75,7 +75,6 @@ export default function Home() {
             presente em nossa barra de navegação.
           </Text>
 
-          {/* Itens de navegação */}
           <View style={styles.row}>
             <Image
               source={require('../assets/homeIcon.png')}
@@ -153,7 +152,8 @@ const fontScale = PixelRatio.getFontScale();
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#6495ed', // Cor de fundo para combinar com o gradiente
+    backgroundColor: '#b4a0e4', // Cor de fundo para combinar com o gradiente
+    paddingBottom: hp('-1%'), // Reduzido para minimizar a área segura
   },
   container: {
     flex: 1,
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     marginBottom: hp('1%'),
   },
   formContainer: {
-    backgroundColor: '#fff', // Fundo claro garantido
+    backgroundColor: '#fff',
     borderRadius: wp('3%'),
     padding: wp('4%'),
     ...Platform.select({
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: '#F3F4F6',
     paddingTop: hp('6%'),
-    paddingBottom: hp('25%'),
+    paddingBottom: hp('8%'), // Reduzido para evitar sobreposição com a barra
     minHeight: '100%',
     alignItems: 'center',
   },
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     padding: wp('3%'),
-    marginTop: hp('2%'),
+    marginTop: hp('8%'),
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     marginTop: hp('0.5%'),
   },
   iconNavegar: {
-    width: wp('15%'), // Tamanho uniforme para todos os ícones
+    width: wp('15%'),
     height: hp('8%'),
     marginTop: hp('1%'),
     resizeMode: 'contain',
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginLeft: wp('5%'),
-    flexShrink: 1, // Evita quebra de texto em telas menores
+    flexShrink: 1,
   },
   agendaContainer: {
     marginTop: hp('4%'),

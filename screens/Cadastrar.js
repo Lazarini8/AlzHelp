@@ -27,7 +27,6 @@ export default function Cadastro() {
   const senhaRef = useRef(null);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -114,17 +113,14 @@ export default function Cadastro() {
           </ScrollView>
         </LinearGradient>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+  
   );
 }
 
 const fontScale = PixelRatio.getFontScale();
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#6495ed', // Cor de fundo para combinar com o gradiente
-  },
+
   container: {
     flex: 1,
   },

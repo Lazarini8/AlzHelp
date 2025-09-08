@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import LogoCerebro from '../componentes/LogoCerebro';
 import BarraNavegacao from '../componentes/BarraNavegacao';
 import { useProfileImage } from './src/FotoPerfil';
@@ -11,175 +13,164 @@ export default function Perfil() {
   const { profileImage, pickImage } = useProfileImage();
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safeArea}>
       <LinearGradient
         colors={['#6495ed', '#ba55d3']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0.5 }}
-        style={styles.gradientBackground} // <== renomeado
+        style={styles.gradientBackground}
       >
         <LogoCerebro />
-       
-
-        <Image source={require('../assets/logoBorbRoxoClaro.png')} style={styles.borboleta} />
-
-        <ScrollView contentContainerStyle={styles.body}>
-        
-        <View style={styles.retangulo} >
-          <TouchableOpacity onPress={pickImage}>
-          <Image source={profileImage ? { uri: profileImage} : require('../assets/perfil4.png')} 
-          style={styles.profileIcon} />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.buttonEditar}>
-             <Text style={styles.buttonTextEditar}>Editar Informações</Text>
-          </TouchableOpacity>
-          
-         </View>
-
-         <View style={styles.opcoes} >
-
+        <Text style={styles.titulo}>Perfil</Text>
+        <Image
+          source={require('../assets/logoBorbRoxoClaro.png')}
+          style={styles.borboleta}
+        />
+        <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
+          <View style={styles.retangulo}>
+            <TouchableOpacity onPress={pickImage}>
+              <Image
+                source={profileImage ? { uri: profileImage } : require('../assets/perfil4.png')}
+                style={styles.profileIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonEditar}>
+              <Text style={styles.buttonTextEditar}>Editar Informações</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.opcoes}>
             <TouchableOpacity style={styles.buttonOpcoes}>
-                  <Image source={require('../assets/confIcon.png')} style={styles.confIcon} />
-                  <Text style={styles.buttonText}>Configurações </Text>
+              <Image source={require('../assets/confIcon.png')} style={styles.confIcon} />
+              <Text style={styles.buttonText}>Configurações</Text>
             </TouchableOpacity>
-
             <TouchableOpacity style={styles.buttonOpcoes}>
-                  <Image source={require('../assets/lembreteIcon.png')} style={styles.lembreteIcon} /> 
-                  <Text style={styles.buttonText}>Lembretes</Text>
+              <Image source={require('../assets/lembreteIcon.png')} style={styles.lembreteIcon} />
+              <Text style={styles.buttonText}>Lembretes</Text>
             </TouchableOpacity>
-
             <TouchableOpacity style={styles.buttonOpcoes}>
-                <Image source={require('../assets/privacidadeIcon.png')} style={styles.privacidadeIcon} /> 
-                <Text style={styles.buttonText}>Privacidade</Text>
+              <Image source={require('../assets/privacidadeIcon.png')} style={styles.privacidadeIcon} />
+              <Text style={styles.buttonText}>Privacidade</Text>
             </TouchableOpacity>
-
             <TouchableOpacity style={styles.buttonOpcoes}>
-               <Image source={require('../assets/ajudaIcon.png')} style={styles.ajudaIcon} /> 
-                <Text style={styles.buttonText}>Ajuda</Text>
+              <Image source={require('../assets/ajudaIcon.png')} style={styles.ajudaIcon} />
+              <Text style={styles.buttonText}>Ajuda</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity style={styles.buttonOpcoes} onPress={() => navigation.navigate('QuemNosSomos')}>
-                 <Image source={require('../assets/nosIcon.png')} style={styles.nosIcon} /> 
-                  <Text style={styles.buttonText}>Quem nós somos?</Text>
-                 
+            <TouchableOpacity
+              style={styles.buttonOpcoes}
+              onPress={() => navigation.navigate('QuemNosSomos')}
+            >
+              <Image source={require('../assets/nosIcon.png')} style={styles.nosIcon} />
+              <Text style={styles.buttonText}>Quem nós somos?</Text>
             </TouchableOpacity>
-              
-         </View> 
-
+          </View>
         </ScrollView>
         <BarraNavegacao />
-
       </LinearGradient>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  gradientBackground: { // Renomeado de container
+  safeArea: {
     flex: 1,
-    paddingTop: 210,
+    backgroundColor: '#b4a0e4', // Consistente com Ferramentas.js
+    paddingBottom: hp('0%'), // Ajustado de -1% para evitar cortes
   },
-
+  gradientBackground: {
+    flex: 1,
+    paddingTop: hp('10%'), // Consistente com Ferramentas.js
+  },
   titulo: {
     color: 'white',
     textAlign: 'center',
-    fontSize: 30,
-    marginTop: 5,
+    fontSize: wp('8%'), // Consistente com Ferramentas.js
+    marginTop: hp('1%'), // Consistente com Ferramentas.js
     fontFamily: 'Calistoga_400Regular',
   },
-
-  body: {
-    backgroundColor: '#d3d3d3',
-    marginTop: 10,
-    paddingBottom: 200, //Margem no final para não tampar nenhum conteúdo com o footbar
-    backgroundColor: '#F3F4F6', // Fundo cinza claro
-    minHeight: '100%', // Garante que o body ocupe a tela inteira
-},
-
   borboleta: {
-    width: 300,
-    height: 80,
+    width: wp('60%'), // Reduzido de 80% para evitar sobreposições
+    height: hp('8%'), // Ajustado de 10% para proporção
     resizeMode: 'contain',
-    position: 'absolute',
-    marginTop: 85,
-    marginBottom: 25,
+    marginTop: hp('2%'), // Reduzido de 10% para melhor espaçamento
+    marginBottom: hp('2%'), // Ajustado de 3%
     alignSelf: 'center',
-    zIndex: 1,
   },
-
+  body: {
+    backgroundColor: '#F3F4F6', // Consistente com Ferramentas.js
+    marginTop: hp('6%'), // Consistente com Ferramentas.js
+    paddingBottom: hp('8%'), // Consistente com Ferramentas.js
+    minHeight: '100%',
+    alignItems: 'center', // Consistente com Ferramentas.js
+  },
   retangulo: {
-    width: 400,
-    height: 150,
-    backgroundColor: '#693fbb',
-    marginTop:0,
-    justifyContent: 'center',  // Alinha a imagem no centro vertical
+    width: wp('90%'), // Consistente com Ferramentas.js
+    height: hp('15%'), // Ajustado de 18% para proporção
+    backgroundColor: '#693fbb', // Consistente com botões de Ferramentas.js
+    marginTop: hp('2%'), // Ajustado para espaçamento
+    flexDirection: 'row', // Alinhado com Ferramentas.js (AlinhaBottons)
+    alignItems: 'center',
+    justifyContent: 'space-between', // Distribui imagem e botão
+    paddingHorizontal: wp('5%'), // Adicionado para espaçamento interno
+    borderRadius: wp('2.8%'), // Consistente com botões de Ferramentas.js
   },
-   profileIcon: {
-    width: 70,
-    height: 70,
-    left: 20,
-    borderRadius: 30,
-    
+  profileIcon: {
+    width: wp('18%'), // Mantido
+    height: wp('18%'), // Mantido
+    borderRadius: wp('9%'), // Mantido
   },
-  buttonEditar:{
-     backgroundColor: '#b98bed',
-      width: 200,
-      height: 34,
-      borderRadius: 50,
-      justifyContent: 'center',
-      alignItems: 'center',
-      alignSelf: 'center',
+  buttonEditar: {
+    backgroundColor: '#b98bed', // Mantido
+    width: wp('50%'), // Mantido
+    height: hp('4.5%'), // Mantido
+    borderRadius: wp('12.5%'), // Mantido
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  buttonTextEditar:{
+  buttonTextEditar: {
     textAlign: 'center',
     color: '#fff',
-    fontSize: 12,
-    fontFamily: 'Poppins_700Bold',
+    fontSize: wp('3.5%'), // Mantido
+    fontFamily: 'Poppins_700Bold', // Consistente com Ferramentas.js
   },
-  opcoes:{
-      
-      alignItems: 'center',
-      alignSelf: 'center',
-      marginTop:45,
-    
+  opcoes: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: hp('5%'), // Mantido
   },
-  buttonOpcoes:{
-    backgroundColor: '#ffffffff',
-      width: 325,
-      height: 56,
-      borderRadius: 23,
-      marginBottom:10,
-      flexDirection: 'row',       // Alinha lado a lado
-      alignItems: 'center',       // Alinha verticalmente
-      padding: 10,
+  buttonOpcoes: {
+    backgroundColor: '#ffffff', // Corrigido de #ffffffff
+    width: wp('90%'), // Ajustado de 80% para consistência com retangulo
+    height: hp('7%'), // Mantido
+    borderRadius: wp('2.8%'), // Alinhado com botões de Ferramentas.js
+    marginBottom: hp('1.5%'), // Mantido
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: wp('3%'), // Ajustado de 2% para melhor espaçamento
   },
-    buttonText:{
-      color: 'black',
-     fontSize: 14,
-     fontFamily: 'Poppins_400Regular',
-     marginLeft: 10, 
-     
-    },
-    confIcon:{
-      width: 30,
-      height: 30,
-    },
-     lembreteIcon:{
-      width: 27,
-      height: 29,
-    },
-     privacidadeIcon:{
-      width: 32,
-      height: 32,
-    },
-    ajudaIcon:{
-      width: 35,
-      height: 35,
-    },
-    nosIcon:{
-      width: 41,
-      height: 29,
-    },
-    
+  buttonText: {
+    color: 'black',
+    fontSize: wp('4%'), // Mantido
+    fontFamily: 'Poppins_700Bold', // Alinhado com textoButton de Ferramentas.js
+    marginLeft: wp('3%'), // Ajustado de 2% para consistência
+  },
+  confIcon: {
+    width: wp('8%'), // Mantido
+    height: wp('8%'), // Mantido
+  },
+  lembreteIcon: {
+    width: wp('7.5%'), // Mantido
+    height: wp('8%'), // Mantido
+  },
+  privacidadeIcon: {
+    width: wp('8.5%'), // Mantido
+    height: wp('8.5%'), // Mantido
+  },
+  ajudaIcon: {
+    width: wp('9%'), // Mantido
+    height: wp('9%'), // Mantido
+  },
+  nosIcon: {
+    width: wp('11%'), // Mantido
+    height: wp('8%'), // Mantido
+  },
 });
