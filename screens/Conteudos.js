@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Image, Platform, PixelRatio, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import LogoCerebro from '../componentes/LogoCerebro';
 import BarraNavegacao from '../componentes/BarraNavegacao';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Ionicons } from '@expo/vector-icons';
+
+const { width } = Dimensions.get('window');
+const isTablet = width > 600;
 
 // Lista de conteúdos com imagens e categorias
 const listaConteudos = [
@@ -14,7 +18,7 @@ const listaConteudos = [
     titulo: 'O que é o Alzheimer',
     keywords: 'o que é alzheimer doença',
     tela: 'OqueAlzheimer',
-    imagem: require('../assets/borboletaBrancaRoxo-Photoroom.png'), // Caminho da imagem
+    imagem: require('../assets/ImgAlzheimer.png'),
     categoria: 'Alzheimer',
   },
   {
@@ -22,71 +26,63 @@ const listaConteudos = [
     titulo: 'Tratamento',
     keywords: 'tratamento alzheimer',
     tela: 'Tratamento',
-    imagem: require('../assets/../assets/ImgTratamento.png'), // Caminho da imagem
+    imagem: require('../assets/ImgTratamento.png'),
     categoria: 'Alzheimer',
   },
   {
     id: '3',
     titulo: 'Cuidados Diários',
-    keywords: 'cuidados ',
-    tela: '',
-    imagem: require('../assets/../assets/ImgCuidadosDiarios.png'),
+    keywords: 'cuidados',
+    tela: 'CuidadosDiarios',
+    imagem: require('../assets/ImgCuidadosDiarios.png'),
     categoria: 'Alzheimer',
   },
   {
     id: '4',
-    titulo: 'Estágios da Doença',
-    keywords: 'estagios',
-    tela: '',
-    imagem: require('../assets/imgEstagios.png'), // Caminho da imagem
+    titulo: 'Alteração de Humor',
+    keywords: 'alteracao de humor personalidade',
+    tela: 'AlteracaoHumor',
+    imagem: require('../assets/ImgAlteracao.png'),
     categoria: 'Alzheimer',
   },
   {
     id: '5',
-    titulo: 'Alteração de Humor',
-    keywords: 'alteracao de humor personalidade',
-    tela: '',
-    imagem: require('../assets/ImgAlteracao.png'), // Caminho da imagem
-    categoria: 'Alzheimer',
+    titulo: 'Quem é o cuidador?',
+    keywords: 'cuidador',
+    tela: 'QuemCuidador',
+    imagem: require('../assets/imgEstagios.png'), // Corrigido de imgEstagios.png
+    categoria: 'Cuidador',
   },
   {
     id: '6',
-    titulo: 'Quem é o cuidador?',
-    keywords: 'cuidador ',
-    tela: 'QuemCuidador',
-    imagem: require('../assets/imgEstagios.png'), // Caminho da imagem
+    titulo: 'Rede de Apoio',
+    keywords: 'cuidador',
+    tela: 'RedeApoio',
+    imagem: require('../assets/ImgRedeApoio.png'),
     categoria: 'Cuidador',
   },
   {
     id: '7',
-    titulo: 'Rede de Apoio',
-    keywords: 'cuidador ',
-    tela: '',
-    imagem: require('../assets/ImgRedeApoio.png'), // Caminho da imagem
+    titulo: 'Saúde Mental',
+    keywords: 'cuidador',
+    tela: 'SaudeMental',
+    imagem: require('../assets/ImgSaudeMental.png'),
     categoria: 'Cuidador',
   },
   {
     id: '8',
-    titulo: 'Saúde Mental',
-    keywords: 'cuidador ',
-    tela: '',
-    imagem: require('../assets/ImgSaudeMental.png'), // Caminho da imagem
+    titulo: 'Direitos do Cuidador',
+    keywords: 'direitos cuidador',
+    tela: 'DireitosCuidador',
+    imagem: require('../assets/ImgDireitosCuidador.png'),
     categoria: 'Cuidador',
   },
   {
     id: '9',
-    titulo: 'Direitos do Cuidador',
-    keywords: 'Direitos cuidador ',
-    tela: '',
-    imagem: require('../assets/ImgDireitosCuidador.png'), // Caminho da imagem
-    categoria: 'Cuidador',
-  },
-  {
-    id: '10',
     titulo: 'Dicas',
-    keywords: 'Dicas ',
-    tela: '',
-    imagem: require('../assets/ImgDicas.png'), // Caminho da imagem
+    keywords: 'dicas',
+    tela: 'Dicas',
+    imagem: require('../assets/ImgDicas.png'),
     categoria: 'Cuidador',
   },
 ];
@@ -122,7 +118,7 @@ export default function Conteudos() {
   const conteudosExibidos = filtrarConteudos();
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safeArea}>
       <LinearGradient
         colors={['#6495ed', '#ba55d3']}
         start={{ x: 0, y: 0 }}
@@ -132,10 +128,10 @@ export default function Conteudos() {
         <LogoCerebro />
         <Text style={styles.titulo}>Conteúdos</Text>
 
-        <ScrollView contentContainerStyle={styles.body}>
+        <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
           {/* Área de Pesquisa */}
           <View style={styles.searchContainer}>
-            <Ionicons name="search" size={24} color="#6B7280" style={styles.searchIcon} />
+            <Ionicons name="search" size={wp('6%')} color="#6B7280" style={styles.searchIcon} />
             <TextInput
               placeholder="Digite sua dúvida aqui ..."
               placeholderTextColor="#9CA3AF"
@@ -157,7 +153,7 @@ export default function Conteudos() {
                 <TouchableOpacity
                   key={conteudo.id}
                   style={styles.button}
-                  onPress={() => navigation.navigate(conteudo.tela)}
+                  onPress={() => conteudo.tela ? navigation.navigate(conteudo.tela) : null}
                 >
                   <Image
                     source={conteudo.imagem}
@@ -184,7 +180,7 @@ export default function Conteudos() {
                 <TouchableOpacity
                   key={conteudo.id}
                   style={styles.button}
-                  onPress={() => navigation.navigate(conteudo.tela)}
+                  onPress={() => conteudo.tela ? navigation.navigate(conteudo.tela) : null}
                 >
                   <Image
                     source={conteudo.imagem}
@@ -211,7 +207,7 @@ export default function Conteudos() {
                 <TouchableOpacity
                   key={conteudo.id}
                   style={styles.button}
-                  onPress={() => navigation.navigate(conteudo.tela)}
+                  onPress={() => conteudo.tela ? navigation.navigate(conteudo.tela) : null}
                 >
                   <Image
                     source={conteudo.imagem}
@@ -228,63 +224,83 @@ export default function Conteudos() {
         </ScrollView>
         <BarraNavegacao />
       </LinearGradient>
-    </View>
+    </SafeAreaView>
   );
 }
 
+const fontScale = PixelRatio.getFontScale();
+
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#6495ed',
+  },
   gradientBackground: {
     flex: 1,
-    paddingTop: 80,
+    paddingTop: hp('10%'),
   },
   titulo: {
-    color: 'white',
+    color: '#fff',
     textAlign: 'center',
-    fontSize: 30,
-    marginTop: 5,
+    fontSize: wp('8%') / fontScale,
+    marginTop: hp('1%'),
     fontFamily: 'Calistoga_400Regular',
   },
   body: {
     backgroundColor: '#F3F4F6',
-    marginTop: 50,
-    paddingBottom: 200,
+    marginTop: hp('6%'),
+    paddingBottom: hp('25%'),
     minHeight: '100%',
+    alignItems: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 10,
-    paddingVertical: 20,
+    paddingHorizontal: wp('3%'),
+    paddingVertical: hp('2%'),
   },
   button: {
     backgroundColor: '#693fbb',
-    width: 105,
-    height: 120,
-    marginHorizontal: 10,
-    borderRadius: 10,
+    width: isTablet ? wp('25%') : wp('30%'),
+    height: hp('18%'),
+    marginHorizontal: wp('2%'),
+    borderRadius: wp('3%'),
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: hp('1%'),
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 5,
+        borderWidth: 1,
+        borderColor: '#00000010',
+      },
+    }),
   },
   textoButton: {
-    color: '#ffffff',
+    color: '#fff',
     fontFamily: 'Poppins_700Bold',
-    fontSize: 10,
+    fontSize: wp('3.5%') / fontScale,
     textAlign: 'center',
-    marginTop: 5,
+    marginTop: hp('1.5%'),
   },
   imagem: {
-    width: 200,
-    height: 80,
-    marginBottom: -10,
+    width: isTablet ? wp('23%') : wp('28%'),
+    height: hp('10%'),
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
-    borderRadius: 16,
-    paddingHorizontal: 16,
-    height: 56,
-    width: '90%',
-    marginVertical: 20,
+    borderRadius: wp('4%'),
+    paddingHorizontal: wp('4%'),
+    height: hp('7%'),
+    width: isTablet ? wp('80%') : wp('90%'),
+    marginVertical: hp('2%'),
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
@@ -293,26 +309,26 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   searchIcon: {
-    marginRight: 12,
+    marginRight: wp('3%'),
   },
   searchInput: {
     flex: 1,
-    fontSize: 16,
+    fontSize: wp('4%') / fontScale,
     color: '#1F2937',
   },
   semResultados: {
-    fontSize: 16,
+    fontSize: wp('4%') / fontScale,
     color: '#4B5563',
-    marginTop: 20,
+    marginTop: hp('2%'),
     textAlign: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: wp('5%'),
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: wp('5%') / fontScale,
+    fontFamily: 'Poppins_700Bold',
     color: '#4B5563',
-    marginLeft: 20,
-    marginBottom: 10,
-    marginTop: 20,
+    marginLeft: wp('5%'),
+    marginBottom: hp('1%'),
+    marginTop: hp('2%'),
   },
 });

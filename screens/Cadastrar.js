@@ -1,8 +1,24 @@
-// Cadastro.js
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, KeyboardAvoidingView, ScrollView, Platform} from 'react-native';
+import React, { useRef } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+  PixelRatio,
+  Dimensions,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import React, { useRef } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+const { width } = Dimensions.get('window');
+const isTablet = width > 600;
 
 export default function Cadastro() {
   const navigation = useNavigation();
@@ -11,158 +27,209 @@ export default function Cadastro() {
   const senhaRef = useRef(null);
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0} // ajuste se tiver header fixo
-    >
+    <SafeAreaView style={styles.safeArea}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? hp('10%') : hp('5%')}
+      >
+        <LinearGradient
+          colors={['#6495ed', '#ba55d3']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 2, y: 0.5 }}
+          style={styles.container}
+        >
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={styles.scrollContainer}
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={styles.header}>
+              <Text style={styles.title}>Bem Vindo(a) ao</Text>
+              <Image
+                source={require('../assets/logoBorbRoxoClaro.png')}
+                style={styles.borboleta}
+                resizeMode="contain"
+              />
+              <Image
+                source={require('../assets/icons8-cérebro-100.png')}
+                style={styles.brain}
+                resizeMode="contain"
+              />
+            </View>
 
-    <LinearGradient colors={['#6495ed', '#ba55d3']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 2, y: 0.5 }}
-      style={styles.container}>
+            <View style={styles.form}>
+              <Text style={styles.title2}>Cadastro</Text>
+              <Text style={styles.label}>Nome</Text>
+              <TextInput
+                ref={nomeRef}
+                style={styles.input}
+                placeholder="Digite seu nome completo"
+                placeholderTextColor="#444"
+                returnKeyType="next"
+                onSubmitEditing={() => emailRef.current.focus()}
+                blurOnSubmit={false}
+              />
 
-     <ScrollView 
-              keyboardShouldPersistTaps="handled"
-              contentContainerStyle={{flexGrow: 1}} 
-              showsVerticalScrollIndicator={false}
-            >
-      
-      <Text style={styles.title}>Bem Vindo(a) ao</Text>
-      <Image source={require('../assets/logoBorbRoxoClaro.png')} style={styles.borboleta} />
-      <Image source={require('../assets/icons8-cérebro-100.png')} style={styles.brain} />
-     
-     
-      <View style={styles.form}>
-        <Text style={styles.title2}>Cadastro</Text>
-        <Text style={styles.label}>Nome</Text>
-        <TextInput ref={nomeRef} style={styles.input} placeholder="Digite seu nome completo" placeholderTextColor="#444" returnKeyType="next"
-        onSubmitEditing={() => emailRef.current.focus()} blurOnSubmit={false}/>
+              <Text style={styles.label}>Email</Text>
+              <TextInput
+                ref={emailRef}
+                style={styles.input}
+                placeholder="Digite seu email"
+                placeholderTextColor="#444"
+                keyboardType="email-address"
+                returnKeyType="next"
+                onSubmitEditing={() => senhaRef.current.focus()}
+                blurOnSubmit={false}
+              />
 
-        <Text style={styles.label}>Email</Text>
-        <TextInput ref={emailRef} style={styles.input} placeholder="Digite seu email" placeholderTextColor="#444" keyboardType="email-address" returnKeyType="next"
-        onSubmitEditing={() => senhaRef.current.focus()} blurOnSubmit={false} />
+              <Text style={styles.label}>Senha</Text>
+              <TextInput
+                ref={senhaRef}
+                style={styles.input}
+                placeholder="Digite uma senha"
+                placeholderTextColor="#444"
+                secureTextEntry
+                returnKeyType="done"
+                onSubmitEditing={() => console.log('Cadastro finalizado')}
+              />
 
-        <Text style={styles.label}>Senha</Text>
-        <TextInput ref={senhaRef} style={styles.input} placeholder="Digite uma senha" placeholderTextColor="#444" secureTextEntry returnKeyType="done"
-        onSubmitEditing={() => console.log('Cadastro finalizado')}/>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Home')}
+              >
+                <Text style={styles.buttonText}>Cadastrar</Text>
+              </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-          <Text style={styles.buttonText}>Cadastrar</Text>
-        </TouchableOpacity>
-        
-        
-
-        <Text style={styles.footerText}>
-          Já possui uma conta? <Text
-                style={styles.buttonText}
-                onPress={() => navigation.navigate('Login')}> Login</Text>
-        </Text>
-      </View>
-      </ScrollView>
-    </LinearGradient>
-    </KeyboardAvoidingView>
+              <Text style={styles.footerText}>
+                Já possui uma conta?{' '}
+                <Text
+                  style={styles.loginLink}
+                  onPress={() => navigation.navigate('Login')}
+                >
+                  Login
+                </Text>
+              </Text>
+            </View>
+          </ScrollView>
+        </LinearGradient>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
+const fontScale = PixelRatio.getFontScale();
+
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#6495ed', // Cor de fundo para combinar com o gradiente
+  },
   container: {
     flex: 1,
-    paddingTop: 80,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    alignItems: 'center',
+    paddingBottom: hp('10%'), // Padding extra para evitar corte pelo teclado
+  },
+  header: {
+    alignItems: 'center',
+    marginTop: hp('5%'),
   },
   title: {
-    textAlign: 'center',
     color: '#fff',
-    fontSize: 15,
+    fontSize: wp('5%') / fontScale, // Ajustado para densidade de pixels
     fontWeight: '500',
-    marginBottom: 1,
-    marginTop: 10,
     fontFamily: 'Poppins_700Bold',
+    textAlign: 'center',
   },
- 
-   borboleta: {
-    width: 250,
-    height: 60,
+  borboleta: {
+    width: wp('60%'),
+    height: hp('8%'),
+    marginTop: hp('2%'),
     resizeMode: 'contain',
-    position: 'absolute',
-    marginTop: 60,
-    justifyContent: 'center', // Alinha no eixo vertical
-    alignItems: 'center',     // Alinha no eixo horizontal
-    alignSelf: 'center', //  Adicione isso para centralizar o botão dentro do form
-    zIndex: 1,
   },
   brain: {
-    width: 70,
-    height: 70,
+    width: wp('15%'),
+    height: hp('8%'),
+    marginTop: hp('19%'),
     resizeMode: 'contain',
     position: 'absolute',
-    marginTop: 210,
     alignSelf: 'center',
     zIndex: 1,
   },
   title2: {
-    position: 'absolute',
-    top: 110,
-    left: 0,
-    right: 0,
-    textAlign: 'center',
     color: '#fff',
-    fontSize: 30,
+    fontSize: wp('8%') / fontScale, // Ajustado para densidade de pixels
     fontWeight: '500',
-    marginTop: -60,
     fontFamily: 'Poppins_700Bold',
+    textAlign: 'center',
+    marginTop: hp('-1%'),
+    marginBottom: hp('2%'),
   },
   form: {
     backgroundColor: '#7B68EE',
-    padding: 40,
-    minHeight: '75%',
-    marginTop: 210,
-    justifyContent: 'center',
-    borderRadius: 40, // 🔥 Aqui arredonda as bordas
-    
+    width: isTablet ? wp('70%') : wp('90%'), // Ajuste para tablets
+    padding: wp('5%'),
+    borderRadius: wp('10%'),
+    alignItems: 'center',
+    marginTop: hp('10%'),
   },
   label: {
     color: '#fff',
-    marginTop: 9,
-    marginBottom: 5,
+    fontSize: wp('4%') / fontScale, // Ajustado para densidade de pixels
+    marginTop: hp('1%'),
+    marginBottom: hp('1%'),
     fontFamily: 'Poppins_700Bold',
+    alignSelf: 'flex-start',
   },
   input: {
     backgroundColor: '#ffff9e',
-    borderRadius: 30,
-     width: 320, 
-    paddingHorizontal: 15,
-    paddingVertical: 12,
-    fontSize: 13,
+    borderRadius: wp('8%'),
+    width: wp('80%'),
+    paddingHorizontal: wp('4%'),
+    paddingVertical: hp('1.5%'),
+    fontSize: wp('3.5%') / fontScale, // Ajustado para densidade de pixels
     fontFamily: 'Poppins_400Regular',
   },
   button: {
-    width: 200,   // Largura do botão
-    height: 50,   // Altura do botão
-    borderRadius: 60, // Aqui arredonda as bordas
-    justifyContent: 'center', // Alinha no eixo vertical
-    alignItems: 'center',     // Alinha no eixo horizontal
-    alignSelf: 'center', //  Adicione isso para centralizar o botão dentro do form
     backgroundColor: '#fff',
-    paddingVertical: 10,
-    marginTop: 30,
+    width: wp('50%'),
+    height: hp('6%'),
+    borderRadius: wp('15%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: hp('4%'),
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 5,
+        borderWidth: 1,
+        borderColor: '#00000010', // Borda leve para consistência
+      },
+    }),
   },
   buttonText: {
     color: '#ba55d3',
-    fontSize: 14,
-    fontFamily: 'Poppins_700Bold'
-    
+    fontSize: wp('4%') / fontScale, // Ajustado para densidade de pixels
+    fontFamily: 'Poppins_700Bold',
   },
   footerText: {
-    textAlign: 'center',
     color: '#fff',
-    marginTop: 20,
-    fontSize: 11,
+    fontSize: wp('3%') / fontScale, // Ajustado para densidade de pixels
+    marginTop: hp('3%'),
     fontFamily: 'Poppins_400Regular',
+    textAlign: 'center',
   },
-  login: {
+  loginLink: {
+    color: '#fff',
     fontWeight: 'bold',
     textDecorationLine: 'underline',
-    marginBottom: 20,
   },
 });

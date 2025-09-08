@@ -17,20 +17,20 @@ export default function Ferramentas() {
   const { notaDestaque } = useEventos();
   return (
 
-    <View style={{ flex: 1 }}> 
-    
-        <LinearGradient colors={['#6495ed', '#ba55d3']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0.5 }}
-          style={styles.container}>
-
+    <View style={{ flex: 1 }}>
+         <LinearGradient
+           colors={['#6495ed', '#ba55d3']}
+           start={{ x: 0, y: 0 }}
+           end={{ x: 1, y: 0.5 }}
+           style={styles.gradientBackground}
+         >
         <LogoCerebro/>
        
           <Text style={styles.titulo}>Ferramentas</Text>
    
     
-          <ScrollView contentContainerStyle={styles.body}>
-            {/* Aqui o widget sem flex:1 */}
+          <ScrollView  contentContainerStyle={styles.body}  showsVerticalScrollIndicator={false}>
+            
               <View style={{ marginTop: 30, paddingBottom: 20, width: '100%' }}>
                 <AgendaWidget eventos={eventos} />
                </View>
@@ -66,15 +66,13 @@ export default function Ferramentas() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1,  },
-  text:
-  { fontSize: 24, fontWeight: 'bold' },
-  
-  container: {
+  gradientBackground: {
     flex: 1,
     paddingTop: 80,
-    alignItems: 'center',
-    resizeMode: 'absolute',
+  },
+
+  scrollView: {
+    width: '100%',
   },
 
   titulo: {
