@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -16,6 +16,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { createUserWithEmailAndPassword} from 'firebase/auth';
+import { auth } from '../firebaseConnection';
+import { db } from '../firebaseConnection';
+import { setDoc, doc } from 'firebase/firestore';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; 
 
 const { width } = Dimensions.get('window');
 const isTablet = width > 600;
@@ -25,6 +30,51 @@ export default function Cadastro() {
   const nomeRef = useRef(null);
   const emailRef = useRef(null);
   const senhaRef = useRef(null);
+ 
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  async function handleRegister() {
+    if (!email || !senha || !nome) {
+      setError('Preencha todos os campos');
+      return;
+    }
+
+    if (senha.length < 6) {
+    setError('A senha deve conter pelo menos 6 caracteres!');
+    return;
+    }
+
+    if (!/\d/.test(senha)) {
+    setError('A senha deve conter pelo menos um número!');
+    return;
+    }
+
+    if (!/[A-Z]/.test(senha)) {
+    setError('A senha deve conter pelo menos uma letra maiúscula!');
+    return;
+    }
+
+    try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+    const user = userCredential.user;
+
+    // Salva o nome no Firestore
+    await setDoc(doc(db, 'usuarios', user.uid), {
+      nome: nome,
+      email: email,
+      criadoEm: new Date()
+    });
+
+    console.log('Usuário criado com sucesso!');
+    navigation.navigate('Home');
+  } catch (err) {
+    setError('Já existe uma conta com este email!');
+  }
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -69,37 +119,61 @@ export default function Cadastro() {
                 returnKeyType="next"
                 onSubmitEditing={() => emailRef.current.focus()}
                 blurOnSubmit={false}
+                value={nome}
+                onChangeText={setNome}
               />
 
               <Text style={styles.label}>Email</Text>
               <TextInput
                 ref={emailRef}
                 style={styles.input}
-                placeholder="Digite seu email"
+                placeholder="Digite um email"
                 placeholderTextColor="#444"
                 keyboardType="email-address"
                 returnKeyType="next"
                 onSubmitEditing={() => senhaRef.current.focus()}
                 blurOnSubmit={false}
+                value={email}
+                onChangeText={setEmail}
               />
 
               <Text style={styles.label}>Senha</Text>
-              <TextInput
-                ref={senhaRef}
-                style={styles.input}
-                placeholder="Digite uma senha"
-                placeholderTextColor="#444"
-                secureTextEntry
-                returnKeyType="done"
-                onSubmitEditing={() => console.log('Cadastro finalizado')}
-              />
+                <View style={{ flexDirection: 'row', alignItems: 'center', width: 320, backgroundColor: '#ffff9e', borderRadius: 30, marginBottom: 10 }}>
+                    <TextInput
+                      ref={senhaRef}
+                      style={{
+                      flex: 1,
+                      paddingHorizontal: 15,
+                      paddingVertical: 12,
+                      fontSize: 13,
+                      color: '#444',
+                      fontFamily: 'Poppins_400Regular',
+                        }}
+                      placeholder="Digite uma senha"
+                      placeholderTextColor="#444"
+                      secureTextEntry={!showPassword}
+                      returnKeyType="done"
+                      value={senha}
+                      onChangeText={setSenha}
+                      onSubmitEditing={() => console.log('Cadastro finalizado')}
+                      />
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={{ paddingHorizontal: 10 }}>
+                <Icon
+                  name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={24}
+                  color="#444"
+                  />
+                </TouchableOpacity>
+              </View>
 
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate('Home')}
+                onPress={handleRegister}
               >
                 <Text style={styles.buttonText}>Cadastrar</Text>
               </TouchableOpacity>
+
+              {error ? <Text style={{ color: 'red', marginTop: 10 }}>{error}</Text> : null}
 
               <Text style={styles.footerText}>
                 Já possui uma conta?{' '}
