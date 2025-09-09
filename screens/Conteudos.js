@@ -231,9 +231,10 @@ export default function Conteudos() {
 const fontScale = PixelRatio.getFontScale();
 
 const styles = StyleSheet.create({
-  safeArea: {
+ safeArea: {
     flex: 1,
-    backgroundColor: '#6495ed',
+    backgroundColor: '#b4a0e4', // Cor de fundo para combinar com o gradiente
+    paddingBottom: hp('-1%'), // Reduzido para minimizar a área segura
   },
   gradientBackground: {
     flex: 1,
