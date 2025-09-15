@@ -1,12 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import LogoCerebro from './componentes/LogoCerebro';
 import BarraNavegacao from './componentes/BarraNavegacao';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function QuemNosSomos() {
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
 
   const pessoas = [
     {
@@ -16,7 +19,7 @@ export default function QuemNosSomos() {
       funcao: 'Desenvolvedora',
       imagem: require('./assets/ImagemBel.jpg'),
       descricao:
-        'Esse projeto é muito importante para mim, pois me dá a oportunidade de ajudar pessoas que estão enfrentando a mesma realidade que a minha família enfrentou. Por meio deste aplicativo, quero contribuir para que essa jornada seja mais compreensível, acolhedora e tranquila, oferecendo informações, suporte e ferramentas que facilitem o dia a dia de pacientes, cuidadores e familiares.',
+        'Esse projeto é muito importante para mim, pois me dá a oportunidade de ajudar pessoas que estão enfrentando a mesma realidade que a minha família enfrentou. Por meio deste aplicativo, quero contribuir para que essa jornada seja mais compreensível, acolhedora e tranquila, oferecendo informações, suporte e ferramentas que facilitem o dia a dia de pacientes, cuidadores e familiares.',
     },
     {
       nome: 'Julia Lazarini',
@@ -27,7 +30,6 @@ export default function QuemNosSomos() {
       descricao:
         'Este projeto representa meu desejo sincero de ajudar e compreender as pessoas da melhor forma possível. Trabalho para que o aplicativo seja intuitivo, acolhedor e capaz de promover mudanças positivas na vida de quem o utiliza.',
     },
-    
     {
       nome: 'Melissa Ayumi Ikuta',
       idade: '18 anos',
@@ -37,21 +39,21 @@ export default function QuemNosSomos() {
       descricao:
         'O Alzhelp para mim está sendo a maior prova de empatia que eu já alcancei, visto que é necessário a todo momento pensar nas necessidades do próximo. Faço ele hoje pensando em poder mudar a vida de pessoas que, assim como todo mundo, merecem uma vida leve e satisfatória.',
     },
-  
-  
   ];
 
   return (
-    <View style={styles.container}>
+    
       <LinearGradient
         colors={['#6495ed', '#ba55d3']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0.5 }}
         style={styles.gradientBackground}
       >
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={wp('7%')} color="white" />
+        </TouchableOpacity>
         <LogoCerebro />
         <Image source={require('./assets/logoBorbRoxoClaro.png')} style={styles.borboleta} />
-
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
           <Text style={styles.title1}>Nosso propósito</Text>
           <Text style={styles.label}>
@@ -63,107 +65,114 @@ export default function QuemNosSomos() {
             {'\n\n'}
             Cuidar de alguém exige muito, mas ninguém precisa fazer isso sozinho.
           </Text>
-
           <Text style={styles.title1}>Quem nós somos</Text>
-
           {pessoas.map((pessoa, index) => (
             <View key={index} style={styles.card}>
-                <Image source={pessoa.imagem} style={styles.perfilImagem} />
-
+              <Image source={pessoa.imagem} style={styles.perfilImagem} />
               <View style={styles.perfilInfo}>
-                 <Text style={styles.nome}>{pessoa.nome}</Text>
-                  <Text style={styles.subInfo}>{pessoa.idade}{'\n'}{pessoa.usuario}{'\n'}{pessoa.funcao}</Text>
+                <Text style={styles.nome}>{pessoa.nome}</Text>
+                <Text style={styles.subInfo}>{pessoa.idade}{'\n'}{pessoa.usuario}{'\n'}{pessoa.funcao}</Text>
               </View>
-                  <Text style={styles.descricao}>{pessoa.descricao}</Text>
+              <Text style={styles.descricao}>{pessoa.descricao}</Text>
             </View>
           ))}
         </ScrollView>
-
-        <BarraNavegacao />
       </LinearGradient>
-    </View>
+    
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   gradientBackground: {
     flex: 1,
-    paddingTop: 200,
-    alignItems: 'center',
+    paddingTop: hp('10%'), // Convertido de 200px, consistente com outros
+  },
+  backButton: {
+    position: 'absolute',
+    top: hp('5%'), // Posiciona no topo
+    left: wp('3%'), // Alinhado à esquerda
+    padding: wp('2%'),
+    zIndex: 2, // Acima de outros elementos
+  },
+  titulo: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: wp('8%'), // Consistente com Ferramentas.js, Mapa.js, Perfil.js
+    marginTop: hp('1%'), // Consistente
+    fontFamily: 'Calistoga_400Regular',
   },
   borboleta: {
-    width: 280,
-    height: 70,
+    width: wp('60%'), // Convertido de 280px, ajustado como Perfil.js
+    height: hp('8%'), // Convertido de 70px
     resizeMode: 'contain',
-    position: 'absolute',
-    marginTop: 85,
+    marginTop: hp('2%'), // Ajustado para fluxo natural
+    marginBottom: hp('2%'),
     alignSelf: 'center',
-    zIndex: 1,
   },
   scrollView: {
     width: '100%',
   },
   body: {
-     backgroundColor: '#F3F4F6', 
-    padding: 20,
-    paddingBottom: 100,
+    backgroundColor: '#F3F4F6', // Consistente com outros
+    marginTop: hp('6%'), // Consistente com Ferramentas.js
+    padding: wp('5%'), // Convertido de 20px
+    paddingBottom: hp('8%'), // Convertido de 100px, consistente
     width: '100%',
+    alignItems: 'center',
   },
   title1: {
     color: '#333',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    fontFamily: 'Poppins_400Regular',
+    fontSize: wp('5.5%'), // Convertido de 20px
+    fontFamily: 'Poppins_700Bold', // Alinhado com nome em card
+    marginBottom: hp('2%'), // Convertido de 10px
   },
   label: {
     color: '#555',
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 20,
+    fontSize: wp('4%'), // Convertido de 14px
+    lineHeight: hp('3%'), // Convertido de 20px
+    marginBottom: hp('3%'), // Convertido de 20px
     fontFamily: 'Poppins_400Regular',
+    textAlign: 'justify',
   },
   card: {
     backgroundColor: '#fff',
-    borderRadius: 15,
-    padding: 15,
-    marginBottom: 20,
+    borderRadius: wp('4%'), // Convertido de 15px
+    padding: wp('4%'), // Convertido de 15px
+    marginBottom: hp('2.5%'), // Convertido de 20px
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: hp('0.3%') }, // Convertido de 2px
     shadowOpacity: 0.2,
-    shadowRadius: 4,
+    shadowRadius: wp('1%'), // Convertido de 4px
     elevation: 3,
+    width: wp('90%'), // Responsivo
   },
   perfilImagem: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 10,
+    width: wp('25%'), // Convertido de 100px
+    height: wp('25%'), // Convertido de 100px
+    borderRadius: wp('12.5%'), // Convertido de 50px
+    marginBottom: hp('1.5%'), // Convertido de 10px
     alignSelf: 'center',
   },
   perfilInfo: {
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: hp('1.5%'), // Convertido de 10px
   },
   nome: {
-    fontSize: 14,
+    fontSize: wp('4%'), // Convertido de 14px
     fontFamily: 'Poppins_700Bold',
     color: '#222',
   },
   subInfo: {
-    fontSize: 12,
+    fontSize: wp('3.5%'), // Convertido de 12px
     color: '#777',
     textAlign: 'center',
-    marginTop: 4,
+    marginTop: hp('0.5%'), // Convertido de 4px
     fontFamily: 'Poppins_400Regular',
   },
   descricao: {
-    fontSize: 12,
+    fontSize: wp('3.5%'), // Convertido de 12px
     color: '#444',
-    lineHeight: 20,
+    lineHeight: hp('3%'), // Convertido de 20px
     textAlign: 'justify',
     fontFamily: 'Poppins_400Regular',
   },

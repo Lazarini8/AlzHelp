@@ -21,7 +21,6 @@ export default function Perfil() {
         style={styles.gradientBackground}
       >
         <LogoCerebro />
-        <Text style={styles.titulo}>Perfil</Text>
         <Image
           source={require('../assets/logoBorbRoxoClaro.png')}
           style={styles.borboleta}

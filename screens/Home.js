@@ -70,7 +70,7 @@ export default function Home() {
 
           <Text style={styles.title2}>Como navegar:</Text>
 
-          <Text style={styles.label}>
+            <Text style={styles.label}>
             Cada símbolo a seguir corresponde a uma área de nosso aplicativo e está
             presente em nossa barra de navegação.
           </Text>
@@ -78,7 +78,7 @@ export default function Home() {
           <View style={styles.row}>
             <Image
               source={require('../assets/homeIcon.png')}
-              style={styles.iconNavegar}
+              style={styles.iconHome}
               resizeMode="contain"
             />
             <View style={styles.textContainer}>
@@ -90,13 +90,13 @@ export default function Home() {
           <View style={styles.row}>
             <Image
               source={require('../assets/borboletaAmarelaRoxo.png')}
-              style={styles.iconNavegar}
+              style={styles.iconConteudos}
               resizeMode="contain"
             />
             <View style={styles.textContainer}>
               <Text style={styles.label2}>Conteúdos</Text>
               <Text style={styles.label}>
-                Página contendo materiais{'\n'}sobre a Doença de{'\n'}Alzheimer (DA).
+                Página contendo materiais sobre a Doença de Alzheimer (DA).
               </Text>
             </View>
           </View>
@@ -104,13 +104,13 @@ export default function Home() {
           <View style={styles.row}>
             <Image
               source={require('../assets/calendario-icon2.png')}
-              style={styles.iconNavegar}
+              style={styles.iconFerramentas}
               resizeMode="contain"
             />
             <View style={styles.textContainer}>
               <Text style={styles.label2}>Ferramentas</Text>
               <Text style={styles.label}>
-                Página das ferramentas{'\n'}como alarme, agenda e{'\n'}gestão de medicamentos.
+                Página das ferramentas como alarme, agenda e gestão de medicamentos.
               </Text>
             </View>
           </View>
@@ -118,13 +118,13 @@ export default function Home() {
           <View style={styles.row}>
             <Image
               source={require('../assets/mapa3.png')}
-              style={styles.iconNavegar}
+              style={styles.iconMapa}
               resizeMode="contain"
             />
             <View style={styles.textContainer}>
               <Text style={styles.label2}>Mapeamento</Text>
               <Text style={styles.label}>
-                Apresenta o mapeamento{'\n'}de clínicas, hospitais e áreas{'\n'}de auxílio.
+                Apresenta o mapeamento de clínicas, hospitais e áreas de auxílio.
               </Text>
             </View>
           </View>
@@ -132,7 +132,7 @@ export default function Home() {
           <View style={styles.row}>
             <Image
               source={require('../assets/perfil2.png')}
-              style={styles.iconNavegar}
+              style={styles.iconPerfil}
               resizeMode="contain"
             />
             <View style={styles.textContainer}>
@@ -310,11 +310,56 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_700Bold',
     marginTop: hp('0.5%'),
   },
-  iconNavegar: {
-    width: wp('15%'),
+iconHome: {
+    width: wp('13%'),
     height: hp('8%'),
-    marginTop: hp('1%'),
+    marginRight: wp('4%'),
     resizeMode: 'contain',
+  },
+  iconConteudos: {
+    width: wp('16%'),
+    height: hp('9%'),
+    marginRight: wp('2%'),
+     left: wp('-2%'),
+    resizeMode: 'contain',
+  },
+  iconFerramentas: {
+    width: wp('26%'),
+    height: hp('9%'),
+    marginRight: wp('-8%'),
+    left: wp('-5%'),
+    resizeMode: 'contain',
+  },
+  iconMapa: {
+    width: wp('30%'),
+    height: hp('12%'),
+    marginRight: wp('-12%'),
+    left: wp('-8%'),
+    resizeMode: 'contain',
+  },
+  iconPerfil: {
+    width: wp('30%'),
+    height: hp('7%'),
+    marginRight: wp('-12%'),
+    left: wp('-8%'),
+    resizeMode: 'contain',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: hp('2%'),
+    width: isTablet ? wp('80%') : wp('90%'),
+    paddingHorizontal: wp('5%'),
+    justifyContent: 'flex-start',
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  agendaContainer: {
+    marginTop: hp('3%'),
+    width: '100%',
+    alignItems: 'center',
   },
   row: {
     flexDirection: 'row',
