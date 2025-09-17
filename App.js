@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts, Poppins_400Regular, Poppins_700Bold } from "@expo-google-fonts/poppins";
 import { Calistoga_400Regular } from '@expo-google-fonts/calistoga';
 import { View, ActivityIndicator, StyleSheet, Image, Animated } from 'react-native';
+import 'react-native-reanimated';
 
 import Cadastro from './screens/Cadastrar';
 import Login from './screens/Login';
