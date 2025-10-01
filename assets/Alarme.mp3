@@ -1,0 +1,8 @@
+import { Audio } from 'expo-av';
+
+async function tocarAlarme() {
+  const { sound } = await Audio.Sound.createAsync(
+    require('../assets/Alarme.mp3')
+  );
+  await sound.playAsync();
+}
