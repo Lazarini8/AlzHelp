@@ -9,6 +9,7 @@ import { useEventos } from '../EventoContext';
 import LogoCerebro from '../componentes/LogoCerebro';
 import BarraNavegacao from '../componentes/BarraNavegacao';
 import Medicamentos from './Medicamentos';
+import Alarme from './Alarme';
 
 export default function Ferramentas() {
   const navigation = useNavigation();
@@ -31,7 +32,7 @@ export default function Ferramentas() {
           </View>
 
           <View style={styles.AlinhaBottons}>
-            <TouchableOpacity style={styles.buttonAlarme}>
+            <TouchableOpacity style={styles.buttonAlarme} onPress={() => navigation.navigate('Alarme')}>
               <Image source={require('../assets/relogio.png')} style={styles.relogioIcon} />
               <Text style={styles.textoButton}>Relógio</Text>
             </TouchableOpacity>

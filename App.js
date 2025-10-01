@@ -21,7 +21,7 @@ import { EventoProvider } from './EventoContext';
 import BlocoNotas from './screens/BlocoNotas';
 import Medicamentos from './screens/Medicamentos';
 import Mapeamento from './componentes/Mapeamento'
-
+import Alarme from './screens/Alarme';
 
 const Stack = createNativeStackNavigator();
 
@@ -68,8 +68,9 @@ export default function App() {
           <Stack.Screen name="AgendaWidget" component={AgendaWidget} />
           <Stack.Screen name="BlocoNotas" component={BlocoNotas} />
           <Stack.Screen name="QuemNosSomos" component={QuemNosSomos} />
-           <Stack.Screen name="Mapeamento" component={Mapeamento} />
-        
+          <Stack.Screen name="Mapeamento" component={Mapeamento} />
+          <Stack.Screen name="Alarme" component={Alarme} />
+
         </Stack.Navigator>
       </EventoProvider>
     </NavigationContainer>

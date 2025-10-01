@@ -165,7 +165,7 @@ export default function BlocoNotas() {
             onPress={() => navigation.canGoBack() ? navigation.goBack() : navigation.navigate('Home')}
             style={styles.backButton}
           >
-            <Ionicons name="arrow-back" size={28} color="#666" />
+            <Ionicons name="arrow-back" size={28} color="#ffffffff" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Bloco de Notas</Text>
         </View>

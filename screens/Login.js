@@ -18,14 +18,15 @@ export default function Login() {
 
   async function handleLogin() {
     if (!email || !senha) {
-      setError('Preencha todos os campos');
+      setError('Preencha todos os campos!');
       return;
     }
     try {
       await signInWithEmailAndPassword(auth, email, senha);
+      setError('');
       navigation.navigate('Home');
     } catch (err) {
-      setError('Email ou senha incorretos');
+      setError('Email ou senha incorretos!');
     }
   }
 

@@ -25,7 +25,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const { width } = Dimensions.get('window');
 const isTablet = width > 600;
 
-export default function Cadastro() {
+export default function Cadastrar() {
   const navigation = useNavigation();
   const nomeRef = useRef(null);
   const emailRef = useRef(null);
@@ -39,7 +39,7 @@ export default function Cadastro() {
 
   async function handleRegister() {
     if (!email || !senha || !nome) {
-      setError('Preencha todos os campos');
+      setError('Preencha todos os campos!');
       return;
     }
 
@@ -68,11 +68,17 @@ export default function Cadastro() {
       email: email,
       criadoEm: new Date()
     });
-
-    console.log('Usuário criado com sucesso!');
+    
+    setError('');
     navigation.navigate('Home');
   } catch (err) {
+    if (err.code === 'auth/email-already-in-use') {
     setError('Já existe uma conta com este email!');
+  } else if (err.code === 'auth/invalid-email') {
+    setError('Email inválido!');
+  } else {
+    setError('Erro ao cadastrar. Tente novamente.');
+  }
   }
   }
 
@@ -154,7 +160,6 @@ export default function Cadastro() {
                       returnKeyType="done"
                       value={senha}
                       onChangeText={setSenha}
-                      onSubmitEditing={() => console.log('Cadastro finalizado')}
                       />
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={{ paddingHorizontal: 10 }}>
                 <Icon
